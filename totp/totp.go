@@ -119,7 +119,7 @@ func ValidateCustom(passcode string, secret string, t time.Time, opts ValidateOp
 			return false, err
 		}
 
-		if rv == true {
+		if rv {
 			return true, nil
 		}
 	}
