@@ -18,17 +18,17 @@
 package totp
 
 import (
-	"github.com/pquerna/otp"
-	"github.com/pquerna/otp/hotp"
-	"github.com/pquerna/otp/internal"
-	"io"
-
 	"crypto/rand"
 	"encoding/base32"
+	"io"
 	"math"
 	"net/url"
 	"strconv"
 	"time"
+
+	"github.com/verystar/otp"
+	"github.com/verystar/otp/hotp"
+	"github.com/verystar/otp/internal"
 )
 
 // Validate a TOTP using the current time.

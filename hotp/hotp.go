@@ -18,19 +18,19 @@
 package hotp
 
 import (
-	"github.com/pquerna/otp"
-	"github.com/pquerna/otp/internal"
-	"io"
-
 	"crypto/hmac"
 	"crypto/rand"
 	"crypto/subtle"
 	"encoding/base32"
 	"encoding/binary"
 	"fmt"
+	"io"
 	"math"
 	"net/url"
 	"strings"
+
+	"github.com/verystar/otp"
+	"github.com/verystar/otp/internal"
 )
 
 const debug = false
@@ -72,7 +72,7 @@ func GenerateCode(secret string, counter uint64) (string, error) {
 // GenerateCodeCustom uses a counter and secret value and options struct to
 // create a passcode.
 func GenerateCodeCustom(secret string, counter uint64, opts ValidateOpts) (passcode string, err error) {
-	//Set default value
+	// Set default value
 	if opts.Digits == 0 {
 		opts.Digits = otp.DigitsSix
 	}

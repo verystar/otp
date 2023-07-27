@@ -25,25 +25,21 @@ import (
 	"errors"
 	"fmt"
 	"hash"
-	"image"
 	"net/url"
 	"strconv"
 	"strings"
-
-	"github.com/boombuler/barcode"
-	"github.com/boombuler/barcode/qr"
 )
 
-// Error when attempting to convert the secret from base32 to raw bytes.
-var ErrValidateSecretInvalidBase32 = errors.New("Decoding of secret as base32 failed.")
+// ErrValidateSecretInvalidBase32 Error when attempting to convert the secret from base32 to raw bytes.
+var ErrValidateSecretInvalidBase32 = errors.New("decoding of secret as base32 failed")
 
-// The user provided passcode length was not expected.
-var ErrValidateInputInvalidLength = errors.New("Input length unexpected")
+// ErrValidateInputInvalidLength The user provided passcode length was not expected.
+var ErrValidateInputInvalidLength = errors.New("input length unexpected")
 
-// When generating a Key, the Issuer must be set.
-var ErrGenerateMissingIssuer = errors.New("Issuer must be set")
+// ErrGenerateMissingIssuer When generating a Key, the Issuer must be set.
+var ErrGenerateMissingIssuer = errors.New("issuer must be set")
 
-// When generating a Key, the Account Name must be set.
+// ErrGenerateMissingAccountName When generating a Key, the Account Name must be set.
 var ErrGenerateMissingAccountName = errors.New("AccountName must be set")
 
 // Key represents an TOTP or HTOP key.
@@ -55,8 +51,8 @@ type Key struct {
 // NewKeyFromURL creates a new Key from an TOTP or HOTP url.
 //
 // The URL format is documented here:
-//   https://github.com/google/google-authenticator/wiki/Key-Uri-Format
 //
+//	https://github.com/google/google-authenticator/wiki/Key-Uri-Format
 func NewKeyFromURL(orig string) (*Key, error) {
 	s := strings.TrimSpace(orig)
 
@@ -73,24 +69,6 @@ func NewKeyFromURL(orig string) (*Key, error) {
 
 func (k *Key) String() string {
 	return k.orig
-}
-
-// Image returns an QR-Code image of the specified width and height,
-// suitable for use by many clients like Google-Authenricator
-// to enroll a user's TOTP/HOTP key.
-func (k *Key) Image(width int, height int) (image.Image, error) {
-	b, err := qr.Encode(k.orig, qr.M, qr.Auto)
-	if err != nil {
-		return nil, err
-	}
-
-	b, err = barcode.Scale(b, width, height)
-
-	if err != nil {
-		return nil, err
-	}
-
-	return b, nil
 }
 
 // Type returns "hotp" or "totp".
@@ -239,13 +217,13 @@ const (
 	DigitsEight Digits = 8
 )
 
-// Format converts an integer into the zero-filled size for this Digits.
+// Format converts an integer into the zero-filled size for these Digits.
 func (d Digits) Format(in int32) string {
 	f := fmt.Sprintf("%%0%dd", d)
 	return fmt.Sprintf(f, in)
 }
 
-// Length returns the number of characters for this Digits.
+// Length returns the number of characters for these Digits.
 func (d Digits) Length() int {
 	return int(d)
 }
