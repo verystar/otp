@@ -100,7 +100,7 @@ func ValidateCustom(passcode string, secret string, t time.Time, opts ValidateOp
 		opts.Period = 30
 	}
 
-	counters := []uint64{}
+	var counters []uint64
 	counter := int64(math.Floor(float64(t.Unix()) / float64(opts.Period)))
 
 	counters = append(counters, uint64(counter))
